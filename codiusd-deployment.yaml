@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codiusd
+  labels:
+    app: codiusd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: codiusd
+  template:
+    metadata:
+      labels:
+        app: codiusd
+    spec:
+      containers:
+      - name: codiusd
+        image: wilsonianbcoil/codiusd
+        env:
+        - name: CODIUS_PUBLIC_URI
+          value: "http://localhost:3000"
+        - name: DEBUG
+          value: "*codiusd*"
+        ports:
+        - containerPort: 3000
+      - name: moneyd-local
+        image: wilsonianbcoil/moneyd-local
+        env:
+        - name: DEBUG
+          value: "*"
+        ports:
+        - containerPort: 7768
+      serviceAccountName: codiusd

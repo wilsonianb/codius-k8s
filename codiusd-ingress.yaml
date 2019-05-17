@@ -1,0 +1,24 @@
+#apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: codiusd
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    #certmanager.k8s.io/issuer: "letsencrypt-staging"
+    #certmanager.k8s.io/acme-challenge-type: http01
+
+spec:
+  tls:
+  - hosts:
+    - example.example.com
+    secretName: example-tls
+  rules:
+  - host: example.example.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: codiusd-service
+          servicePort: 3000

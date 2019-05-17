@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moneyd-local
+  labels:
+    app: moneyd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moneyd
+  template:
+    metadata:
+      labels:
+        app: moneyd
+    spec:
+      containers:
+      - name: moneyd-local
+        image: wilsonianbcoil/moneyd-local
+        env:
+        - name: DEBUG
+          value: "*"
+        ports:
+        - containerPort: 7768
